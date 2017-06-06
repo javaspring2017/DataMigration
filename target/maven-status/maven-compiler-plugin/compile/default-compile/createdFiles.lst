@@ -1,0 +1,8 @@
+com\geeks\controllers\PSMetaController.class
+com\geeks\services\GlsService.class
+com\geeks\controllers\GlsController.class
+com\geeks\services\PSMetaService.class
+com\geeks\repo\main\PSMetaRepo.class
+com\geeks\entities\Gls.class
+com\geeks\repo\main\GlsRepo.class
+com\geeks\entities\PSMeta.class

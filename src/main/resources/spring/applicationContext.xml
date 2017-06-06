@@ -1,0 +1,105 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/data/jpa
+	    http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+        http://www.springframework.org/schema/jdbc
+        http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="com.geeks">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- Configure the JPA entity manager factory with Hibernate -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="false"/>
+                <property name="database" value="MYSQL"/>
+                <property name="generateDdl" value="false"/>
+                <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect"/>
+            </bean>
+        </property>
+        <property name="persistenceUnitName" value="geeks"/>
+        <property name="persistenceXmlLocation" value="classpath:spring/persistence.xml"/>
+    </bean>
+
+    <!--<bean id="prodExpoEntityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="prodExpoDataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="showSql" value="${log4j.hibernate.showSql}"/>
+                <property name="database" value="ORACLE"/>
+                <property name="generateDdl" value="false"/>
+            </bean>
+        </property>
+        <property name="persistenceUnitName" value="prodexpo"/>
+        <property name="persistenceXmlLocation" value="classpath:spring/persistence.xml"/>
+        <property name="packagesToScan" value="org." />
+    </bean>-->
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!--<bean id="prodExpoTransactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="prodExpoEntityManagerFactory"/>
+    </bean>-->
+
+    <jpa:repositories base-package="com.geeks.repo.main" entity-manager-factory-ref="entityManagerFactory"/>
+    <!--<jpa:repositories base-package="com.1000geeks.repo.expo" entity-manager-factory-ref="prodExpoEntityManagerFactory"/>-->
+
+    <!-- ORACLE JDBC CONNECTION POOL -->
+    <!-- <bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource" destroy-method="close">
+        <property name="URL" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+        <property name="connectionCachingEnabled" value="true"/>
+    </bean> -->
+
+    <!-- Tomcat JDBC connection pool -->
+    <bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/peyrouse_hair_shop?useSSL=true" />
+        <property name="username" value="root" />
+        <property name="password" value="root" />
+        <property name="initialSize" value="40" />
+        <property name="maxActive" value="40" />
+        <property name="maxIdle" value="40" />
+        <property name="minIdle" value="40" />
+        <property name="maxWait" value="-1" />
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="25" />
+        <property name="testOnBorrow" value="true" />
+        <property name="validationQuery" value="select 1 from dual" />
+        <property name="validationQueryTimeout" value="10" />
+        <property name="validationInterval" value="10000" />
+    </bean>
+
+    <!--<bean id="prodExpoDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+        <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
+        <property name="url" value="${jdbc.expo.url}"/>
+        <property name="username" value="${jdbc.expo.username}" />
+        <property name="password" value="${jdbc.expo.password}" />
+        <property name="initialSize" value="${jdbc.expo.pool.initialSize}" />
+        <property name="maxActive" value="${jdbc.expo.pool.maxActive}" />
+        <property name="maxIdle" value="${jdbc.expo.pool.maxIdle}" />
+        <property name="minIdle" value="${jdbc.expo.pool.minIdle}" />
+        <property name="maxWait" value="-1" />
+        <property name="removeAbandoned" value="true"/>
+        <property name="removeAbandonedTimeout" value="25" />
+        <property name="testOnBorrow" value="true" />
+        <property name="validationQuery" value="select 1 from dual" />
+        <property name="validationQueryTimeout" value="10" />
+        <property name="validationInterval" value="10000" />
+    </bean>-->
+
+</beans>
