@@ -20,5 +20,4 @@ public class PSMetaService {
     public List<PSMeta> getAll() {
         return repo.findAll();
     }
-
 }
