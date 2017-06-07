@@ -14,21 +14,14 @@ import java.util.List;
  * Created by Anastasiia on 06.06.2017.
  */
 @RestController
-@RequestMapping("/api/ps_metas")
+@RequestMapping("/api/ps_meta")
 public class PSMetaController {
 
     @Autowired
     private PSMetaService service;
 
-    /**
-     * <p>Info: Get list of ps_metas.</p>
-     * <p>Path: <b>/api/ps_metas/list</b>.</p>
-     * <p>Request method: <b>GET</b>.</p>
-     *
-     * @return HttpStatus.OK with list of ps_metas.
-     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<List<PSMeta>> getPSMetas() {
+    public ResponseEntity<List<PSMeta>> getList() {
         return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }
 

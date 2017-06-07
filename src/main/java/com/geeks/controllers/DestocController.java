@@ -16,21 +16,14 @@ import java.util.List;
  * Created by Anastasiia on 06.06.2017.
  */
 @RestController
-@RequestMapping("/api/destocs")
+@RequestMapping("/api/destoc")
 public class DestocController {
 
     @Autowired
     private DestocService service;
 
-    /**
-     * <p>Info: Get list of destocs.</p>
-     * <p>Path: <b>/api/destocs/list</b>.</p>
-     * <p>Request method: <b>GET</b>.</p>
-     *
-     * @return HttpStatus.OK with list of destocs.
-     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public ResponseEntity<List<Destoc>> getFrancos() {
+    public ResponseEntity<List<Destoc>> getList() {
         return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }
 }
