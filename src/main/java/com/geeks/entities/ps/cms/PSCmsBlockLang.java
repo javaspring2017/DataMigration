@@ -12,7 +12,7 @@ public class PSCmsBlockLang {
     @Id
     @Column(name = "ID_CMS_BLOCK", nullable = false)
     private Integer idCmsBlock;
-    
+
     @Column(name = "ID_LANG", nullable = false)
     private Integer idLang;
 
