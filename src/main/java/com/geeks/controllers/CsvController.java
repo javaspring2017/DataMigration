@@ -26,4 +26,9 @@ public class CsvController {
     public ResponseEntity<List<Csv>> getList() {
         return new ResponseEntity<>(service.getAll(), HttpStatus.OK);
     }
+
+    @RequestMapping(value = "/listext", method = RequestMethod.GET)
+    public ResponseEntity<List<Csv>> getListExt() {
+        return new ResponseEntity<>(service.getAllExt(), HttpStatus.OK);
+    }
 }
